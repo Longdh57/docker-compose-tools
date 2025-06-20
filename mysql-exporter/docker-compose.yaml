@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  mysqld_exporter:
+    image: prom/mysqld-exporter:v0.15.0
+    environment:
+      - DATA_SOURCE_NAME=exporter:exporterpassword@(127.0.0.1:3306)/
+    network_mode: host
+    restart: unless-stopped
