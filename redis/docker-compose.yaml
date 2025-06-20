@@ -13,6 +13,18 @@ services:
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     restart: unless-stopped
 
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    networks:
+      - app-network
+    ports:
+      - "9121:9121"
+    environment:
+      - REDIS_ADDR=redis://:redis1234@redis:6379
+    restart: unless-stopped
+    depends_on:
+      - redis
+
 networks:
   app-network:
     driver: bridge
