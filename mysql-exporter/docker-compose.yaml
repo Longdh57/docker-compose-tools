@@ -2,11 +2,10 @@ version: '3.7'
 
 services:
   mysqld_exporter:
-    image: prom/mysqld-exporter:v0.15.0
+    image: quay.io/prometheus/mysqld-exporter
+    container_name: mysqld-exporter
     command:
-      - '--config.my-cnf=""'
-      - '--mysqld.username=exporter'
-      - '--mysqld.password=exporterpassword'
-      - '--mysqld.address=127.0.0.1:3306'
+      - "--mysqld.username=exporter:exporterpassword"
+      - "--mysqld.address=127.0.0.1:3306"
     network_mode: host
     restart: unless-stopped
