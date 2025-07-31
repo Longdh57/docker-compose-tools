@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: bitnami/mysql:8.0
+    container_name: mysql
+    networks:
+      - app-network
+    volumes:
+      - db-data:/bitnami/mysql/data
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_CHARACTER_SET: utf8mb4
+      MYSQL_COLLATE: utf8mb4_unicode_ci
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./db-data
+      o: bind
