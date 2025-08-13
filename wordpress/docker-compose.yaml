@@ -4,6 +4,9 @@ services:
 
   wordpress:
     image: wordpress
+    container_name: wordpress
+    networks:
+      - app-network
     restart: always
     ports:
       - 8080:80
@@ -18,17 +21,27 @@ services:
       - ./wordpress:/var/www/html
 
   db:
-    image: mysql:5.7
-    restart: always
-    ports:
-      - 3308:3306
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    image: bitnami/mysql:8.0
+    container_name: mysql
+    networks:
+      - app-network
     volumes:
-      - db:/var/lib/mysql
+      - db-data:/bitnami/mysql/data
+    ports:
+      - '3308:3306'
+    environment:
+      MYSQL_CHARACTER_SET: utf8mb4
+      MYSQL_COLLATE: utf8mb4_unicode_ci
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   wordpress:
