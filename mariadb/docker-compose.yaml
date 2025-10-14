@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: bitnami/mariadb:latest
+    container_name: mariadb
+    networks:
+      - app-network
+    volumes:
+      - db-data:/bitnami/mariadb
+    ports:
+      - '3306:3306'
+    environment:
+      MARIADB_CHARACTER_SET: utf8mb4
+      MARIADB_COLLATE: utf8mb4_unicode_ci
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./db-data
+      o: bind

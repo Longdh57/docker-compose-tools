@@ -84,4 +84,4 @@ docker/
 */.DS_Store
 
 # Folder upload file
-mysql/db-data/*
+*/db-data/*
