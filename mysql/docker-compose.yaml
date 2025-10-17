@@ -9,7 +9,7 @@ services:
     volumes:
       - db-data:/bitnami/mysql/data
     ports:
-      - '3306:3306'
+      - '${MYSQL_PORT:-3306}:3306'
     environment:
       MYSQL_CHARACTER_SET: utf8mb4
       MYSQL_COLLATE: utf8mb4_unicode_ci
