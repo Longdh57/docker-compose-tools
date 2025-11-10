@@ -20,6 +20,7 @@ services:
 
 networks:
   app-network:
+    name: mysql-app-network
     driver: bridge
 
 volumes:
