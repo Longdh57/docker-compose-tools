@@ -3,6 +3,7 @@ version: '3.7'
 services:
   redis:
     image: redis:6.0.3-alpine
+    container_name: redis
     networks:
       - app-network
     ports:
