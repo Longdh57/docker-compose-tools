@@ -19,6 +19,7 @@ services:
 
 networks:
   app-network:
+    name: 5ticket-app-network
     driver: bridge
 
 volumes:
